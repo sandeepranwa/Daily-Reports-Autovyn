@@ -1,0 +1,92 @@
+using System;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;   
+using System.Xml.Linq;
+using System.Reflection.Metadata;
+
+
+public class myProgram
+{
+    public static void Main(string[] args)
+    {
+        //Method invoked
+        newMethods();
+        paraMethod("Sunny", 2022);
+
+        //Method Overloading
+        Console.WriteLine(returnMethod(3.14, 76));
+        Console.WriteLine(returnMethod(3, 76));
+
+        //Param keyword method invoked
+        Console.WriteLine(Add(12, 3, 4, 21, 31, 3, 31));
+
+        //Class called
+
+        human human1 = new human(); //Object create
+        human human2 = new human(); 
+
+        human1.name = "rohan";
+        human1.age = 21;
+        human1.birthy = 2001;
+
+        human1.info();
+        human1.info2();
+    }
+
+    //Method------
+    static void newMethods() {
+        Console.WriteLine("Write your name:");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Write your age:");
+        int age = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine($"Your name is: {name} and age: {age}....Right!!!1");
+    }
+
+    //Parameter Methods-----
+    static void paraMethod(string nickname, int year) { 
+    Console.WriteLine($"Your nickname is: {nickname} and years are: {year}....");
+    }
+
+    //Return type------
+    static double returnMethod(double x, double y) { 
+        return x * y;
+    }
+
+    //Method overloadin is multiple methods can have the same name with different parameters.
+    static int returnMethod(int x, int y)
+    {
+        return x * y;
+    }
+
+    //Params keyword --- It is used as a parameter which can take the variable number of arguments.
+    public static int Add(params int[] nums) {
+        int total = 0;
+
+        // foreach loop 
+        foreach (int n in nums)
+        {
+            total += n;
+        }
+        return total;
+    }
+
+    public class human
+    {
+        public string name;
+        public int birthy = 2003;
+        public int age;
+
+        public void info()
+        {
+            Console.WriteLine($"Your name is {name} and Date of birth are {birthy}");
+        }
+
+        public void info2()
+        {
+           Console.WriteLine($"huamn age is {age}");
+        }
+    }
+}
