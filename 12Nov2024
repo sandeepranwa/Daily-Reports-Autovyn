@@ -1,0 +1,184 @@
+using System;
+
+public class myProgram
+{
+
+    public static void Main(string[] args)
+    {
+        /*
+        //Expection - error show during code execution -------------------------------------
+             //try - In this block write the code that produce the error
+             //catch - In this block if try block throw the error then this block execute
+             //finally - This block execute if any error not throw....
+
+        double num1,num2;
+        double result;      
+        try
+        {
+            //Code that may be throw exception
+            Console.WriteLine("Enter your first num: ");
+            num1 = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("Enter your Second num: ");
+            num2 = Convert.ToDouble(Console.ReadLine());
+
+            result = num1 * num2;
+            Console.WriteLine($"Result are: {result}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Oops!! Somethings is wrong....");
+        }
+        finally
+        {
+            Console.WriteLine("Done......");
+        }
+        */
+
+
+        /*
+        //constructors - A special method in the class,Same name as the class name -------------
+        //                  can be used to assign arguments when we creating a object.
+
+        Employees emp1 = new Employees(1, "aman", 23500);
+        Employees emp2 = new Employees(2, "rahul",21000);
+
+        emp1.emp_info();
+        emp2.emp_info();*/
+
+        /* 
+        // single inheritance call ------------------------
+         emp info = new emp();
+         info.workinfo();
+         info.empwork();
+
+         //multi-level inheritance call------------
+         empdts empdts = new empdts();
+         empdts.workinfo();
+         empdts.empwork();
+         empdts.emp_info();
+
+         // hierarchical inheritance
+         empdomain empdomain = new empdomain();
+         empdomain.workinfo();
+         empdomain.emp_info();
+         empdomain.empwork();
+         empdomain.domain();*/
+
+
+        //generics method --------------
+       /*int[] num = { 1, 2, 3, 4, 5 };
+        double[] d = { 21.12, 7.21, 812.2 };
+        String[] names = { "aman", "rohan", "rahul" };
+
+        series(num);
+        series(d);
+        series(names);*/ 
+
+        //Polymorphism
+        Animal animal = new Animal();  
+        dog dog = new dog();
+        cat cat = new cat();
+
+        animal.Sound();
+        dog.Sound();
+        cat.Sound();
+    }
+
+    //constructors classes-------
+    /*class Employees
+    {
+        int emp_id;
+        string name;
+        float salary;
+
+        public Employees(int emp_id,string name,float salary)
+        {
+            this.emp_id = emp_id; // 'this' keyword is used to refer the instance variable OF THE Class 
+            this.name = name;
+            this.salary = salary;
+        }
+
+        public void emp_info()
+        {
+            Console.WriteLine("\n The Id is " +emp_id + "\n Name are: " + name+ "\n And Salary is: " +salary );
+            Console.WriteLine($"Emp id is {this.emp_id} name: {this.name} and salary is {this.salary}");
+        }
+    }*/
+
+
+    /*//inheritance
+
+    //1. Single inheritance classes--------
+    class company_info
+    {
+        public void workinfo()
+        {
+            Console.WriteLine("This company is a Pvt. Lmt for provide the it services");
+        }
+    }
+
+    class emp : company_info
+    {
+        public void empwork()
+        {
+            Console.WriteLine("The emp work for the creating the web/app");
+        }
+    }
+
+    // 2. multi-level inheritance
+    class empdts : emp //empdts - employes details
+    {
+        public void emp_info()
+        {
+            Console.WriteLine(" here is the company employess info available....");
+        }
+    }
+
+    // 3. hierarchical inheritance
+    class empdomain : empdts
+    {
+        public void domain()
+        {
+            Console.WriteLine("this class is provide the employess details...");
+        }
+    }*/
+
+    // generics Class - this one method to we can execute the any data types array.
+   /* public static void series<Things>(Things[ ] array)
+    {
+        foreach (Things itams in array)
+        {
+            Console.Write(itams + " ");
+        }
+    }*/
+
+
+
+    //Polymorphism
+
+    //1. Method overriding
+    class Animal
+    {
+        public virtual void Sound()
+        {
+            Console.WriteLine("the all animals sounds");
+        } 
+    }
+
+    class dog : Animal
+    {
+        public override void Sound()
+        {
+            Console.WriteLine("this is the dog sound");
+        }
+    }
+    class cat : Animal
+    {
+        public override void Sound()
+        {
+            Console.WriteLine("this is the cat sound");
+        }
+    }
+
+}
