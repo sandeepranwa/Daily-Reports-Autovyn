@@ -1,0 +1,109 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+
+//Extansion Method 
+/*static class Getcount
+{
+    public static int GetDigit(this int num)
+    {
+        int count = 0;
+        while (num != 0)
+        {
+            count++;
+            num = num / 10;
+        }
+        return count;
+    }
+}*/
+
+public class myProgram
+{
+
+    public static void Main(string[] args)
+    {
+
+        //Abstract class invoked-------
+        /*Cat cat = new Cat();
+        cat.animalName();
+        cat.animalsound();*/
+
+        //Interfaces class invoked
+        /*emp emp = new emp();
+        emp.name();
+        emp.salary();
+        emp.work();*/
+
+        //Extansion Method invoked
+       /* int nums = 237510;
+        int result = nums.GetDigit();
+        Console.WriteLine(result);*/
+
+
+        //LINQ------------------
+
+        //filtering
+        //var listnum = new List<int>() {1, 2,3,4,5,6,7,8,9 };
+        //var num = listnum.Where(x => x% 2 == 0).ToList();
+
+        //orderby
+        //int[] age = { 1, 2, 3, 4, 5, 6, 7, 56, 7, 34, 12, 33, 78, 96 };
+        //var num = from i in age where i > 6 orderby i descending select i;
+
+        string[] name = { "Rahul", "aman", "shivani", "ishwar", "nishant" };
+        var num = from i in name where i.Contains("a") select i;
+  
+
+        foreach (var e in num)
+        {
+            Console.WriteLine(e);
+        }
+
+    }
+
+    //Abstract class and mathod-----------------
+    /*abstract class Animal
+    {
+        public abstract void animalsound(); // abstract method
+        public void animalName()
+        {
+            Console.WriteLine("Here is the animal name..");
+        }
+    }
+
+    class Cat : Animal 
+    {
+        public override void animalsound(){
+            Console.WriteLine("this is abstract method called...");
+        }
+    }*/
+
+    //Interface class-------------------------
+    /*interface Company_info
+    {
+        void work();
+    }
+    interface Employee
+    {
+        void name();
+        void salary();
+    }
+
+    class emp : Employee
+    {
+       public void name()
+        {
+            Console.WriteLine("First name is: Rahul");
+        }
+        public void salary()
+        {
+            Console.WriteLine("Salary is: 28782");
+        }
+
+        public void work()
+        {
+            Console.WriteLine("here is the company work info..");
+        }
+    }*/
+}
