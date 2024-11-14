@@ -1,0 +1,34 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;   
+
+public class myProgram
+{ 
+    public static void Main(string[] args)
+    {
+        //Hashtable
+        /*Hashtable table = new Hashtable();
+        table.Add(1,200);
+        table.Add(2, "Aman");
+        table.Add(3, 82.122);
+
+        foreach(DictionaryEntry itam in table)
+        {
+            Console.WriteLine($"Key = {itam.Key} value = {itam.Value}");
+        }*/
+      
+        //Dictionary
+        Dictionary<int,string> dictionary = new Dictionary<int,string>();
+        dictionary.Add(1, "Rahul");
+        dictionary.Add(2, "Akshy");
+        dictionary.Add(3, "Ram");
+        dictionary.Add(4, "Mohan");
+
+        //Console.WriteLine(dictionary[1]);
+
+        foreach (KeyValuePair<int, string> element in dictionary)
+        {
+            Console.WriteLine($"Key:- {element.Key} and Value:- {element.Value}");
+        }
+    }
+}
