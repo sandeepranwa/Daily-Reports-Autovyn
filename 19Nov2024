@@ -1,0 +1,116 @@
+use testDB
+CREATE TABLE Employee (
+    UserId INT PRIMARY KEY IDENTITY(1,1), 
+    Name NVARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    Salary DECIMAL(10, 2) NOT NULL,
+    City NVARCHAR(50) NOT NULL
+);
+
+ALTER TABLE Employee ADD DateOfBirth DATE
+
+INSERT INTO Employee (Name, Age, Salary, City)
+VALUES 
+    ('John Denis', 23, 45000.00, 'Dallas');
+    
+UPDATE Employee
+SET DateOfBirth = '1960-08-10'
+where UserId = 7;
+
+	SELECT * FROM employee
+
+
+--fuction create
+CREATE FUNCTION ShowBonus( @Salary INT)
+RETURNS VARCHAR(50)
+AS
+BEGIN
+		IF @Salary > 70000 
+		RETURN ('Eligibale For Bonus');
+		ELSE 
+		RETURN ('Not Eligibale For Bonus');
+
+		RETURN @Salary;
+END;
+
+--Function call
+select dbo.ShowBonus(300000) as Bonus;
+
+SELECT UserId, Name, Age, City, dbo.ShowBonus(Salary) AS BONUS FROM employee
+where age > 35
+
+SELECT Age, COUNT(*) FROM employee
+GROUP BY Age;
+
+
+--Task: Create a Function to Calculate the Annual Salary of an Employee
+CREATE FUNCTION AnnualSalary ( @Salary Decimal(10,2) )
+RETURNS Decimal(10,2)
+AS 
+	BEGIN 
+		IF @Salary IS NULL
+			RETURN NULL;
+		
+		RETURN @Salary * 12;
+	END
+
+
+SELECT dbo.AnnualSalary(5000);
+SELECT dbo.AnnualSalary(NULL);
+
+SELECT UserId, Name, Age, City, dbo.ShowBonus(Salary) AS BONUS,dbo.AnnualSalary(Salary) AS AnnualSalary FROM employee
+
+
+--Task: Create a Function to Calculate the Age of an Employee Based on Their Date of Birth
+CREATE FUNCTION CalculateAge
+(
+    @DateOfBirth DATE
+)
+RETURNS INT
+AS
+BEGIN
+    -- Check if DateOfBirth is NULL
+    IF @DateOfBirth IS NULL
+        RETURN NULL;
+
+    -- Calculate age
+    RETURN DATEDIFF(YEAR, @DateOfBirth, GETDATE());
+         
+END;
+
+SELECT dbo.CalculateAge('1985-11-25') AS Age
+dbo.checkRetirement('1985-11-25') AS Eligibal
+
+SELECT UserId, Name, Age, City,DateOfBirth, dbo.ShowBonus(Salary)  AS BONUS,dbo.CalculateAge(DateOfBirth) AS NewAge 
+FROM employee
+
+--Check Eligibal or Not For Retirement
+CREATE FUNCTION checkRetirement( @DateOfBirth DATE )
+RETURNS VARCHAR(50)
+	BEGIN
+		IF @DateOfBirth IS NULL
+			RETURN NULL;
+		ELSE IF DATEDIFF(YEAR, @DateOfBirth, GETDATE())  > 60
+			RETURN 'You Are Eligible for Retirement...';
+	
+		RETURN 'You Are NOT Eligible for Retirement...';
+	END;
+
+SELECT dbo.checkRetirement('1985-11-25') AS Eligibal;
+SELECT UserId, Name, Age, City,DateOfBirth, dbo.ShowBonus(Salary)  AS BONUS,dbo.checkRetirement(DateOfBirth) AS Eligibal,dbo.CalculateAge(DateOfBirth) AS NewAge 
+FROM Employee
+
+--IF ELSE Condition 
+
+CREATE PROCEDURE HikeView (@Age INT )
+AS 
+	BEGIN
+		IF @Age > 35 
+			PRINT('Your Monthly Hike is 25%');
+		ELSE IF @Age > 30
+			PRINT('Your Monthly Hike is 17%');
+		ELSE IF @Age > 25
+			PRINT('Your Monthly Hike is 12%');	
+	END;
+
+EXEC HikeView 36
