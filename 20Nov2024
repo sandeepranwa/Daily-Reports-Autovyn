@@ -1,0 +1,177 @@
+--Task: Create a Scalar Function to Calculate Employee Bonus Rating Base Performace
+	
+CREATE FUNCTION CalculateBonus(
+@Salary DECIMAL(10,2),
+@PerformanceRating INT
+)
+RETURNS DECIMAL(10,2)
+BEGIN
+	IF @PerformanceRating = 5
+		RETURN @Salary*0.20;
+	ELSE IF @PerformanceRating = 4
+		RETURN @Salary*0.15;
+	ELSE IF @PerformanceRating = 3
+		RETURN @Salary*0.10;
+	ELSE IF @PerformanceRating = 2
+		RETURN @Salary*0.05;
+
+	RETURN @Salary*0;
+END;
+
+SELECT dbo.CalculateBonus(22300.37,3) AS BONUS;
+
+
+ALTER FUNCTION GetOrdersByDateRange (@StartDate DATE,@EndDate DATE )
+RETURNS TABLE
+AS
+		RETURN (
+		SELECT 
+		customer_id AS ID,
+		amount AS AMOUNT,
+		mode AS MODE,
+		city AS CITY,
+		payment_date AS OrderDate
+		FROM payment
+		WHERE payment_date BETWEEN @StartDate AND @EndDate
+		Order BY payment_date
+		);
+GO
+
+
+	SELECT * FROM  dbo.GetOrdersByDateRange('2020-01-01','2020-12-30') ;
+
+
+CREATE FUNCTION GetTotalSalesByCity (@City VARCHAR(100))
+RETURNS TABLE
+AS
+RETURN (
+		SELECT 
+			city AS CITY,
+			COUNT(customer_id) AS TotalSales
+		FROM 
+			payment
+		WHERE	
+			@City = city
+		GROUP BY city
+	);
+GO
+	
+	SELECT * FROM dbo.GetTotalSalesByCity('jaipur');
+
+		select*from [dbo].[payment]
+
+--Create a Stored Procedure for Managing Employee Records
+
+SELECT PROCEDURE ManageEmployees 
+(
+	@Action NVARCHAR(10),
+	@Name NVARCHAR(50),
+	@Age INT = NULL,
+	@Salary DECIMAL(10,2) =NULL,
+	@City NVARCHAR(50) = NULL,
+	@DateOfBirth DATE = NULL
+)
+AS
+BEGIN 
+		IF @Action = 'INSERT'
+		BEGIN
+			INSERT INTO Employee (Name,Age,Salary,City,DateOfBirth) 
+			VALUES (@Name, @Age, @Salary, @City, @DateOfBirth)
+		END
+
+		ELSE IF @Action = 'SELECT'
+		BEGIN
+			SELECT * FROM Employee;
+		END
+
+		ELSE IF @Action = 'UPDATE'
+		BEGIN
+			UPDATE Employee
+			SET Age = @Age, 
+				Salary = @Salary, 
+				City = @City, 
+				DateOfBirth = @DateOfBirth
+			WHERE Name = @Name
+			PRINT 'Product updated successfully!';
+		END
+
+		ELSE IF @Action = 'DELETE'
+		BEGIN
+			DELETE FROM Employee WHERE Name = @Name;
+			PRINT 'Product deleted successfully!';
+		END
+
+		ELSE 
+		BEGIN
+			 PRINT 'Invalid action. Use CREATE, READ, UPDATE, or DELETE.';
+		END
+END;
+
+ManageEmployees 'INSERT','Shyam Sharma',23,50000,'Jaipur','2001-05-12' --INSERT Operation
+ManageEmployees 'UPDATE','Shyam Sharma',23,40000,'Jaipur','2001-05-12' --UPDATE Operation
+ManageEmployees 'SELECT','',0,0,'','';
+ManageEmployees 'DELETE','Shyam Sharma',0,0,'','';
+
+
+
+
+--Create a Stored Procedure to Search for Employee with Optional Filters
+
+ALTER PROCEDURE SeachEmployee 
+(
+	@Name VARCHAR(50)=NULL,
+	@Age INT = NULL,
+	@FSalary DECIMAL(10,2) = NULL,
+	@LSalary DECIMAL(10,2) = NULL
+)
+AS 
+BEGIN
+	 SELECT * FROM Employee
+     WHERE 
+        (@Name IS NULL OR Name = @Name)
+
+        AND (@Age IS NULL OR Age = @Age)
+  
+        AND  
+            (Salary BETWEEN @FSalary AND @LSalary)
+END;
+
+SeachEmployee 'John Doe',24;
+SeachEmployee '', 23;
+
+EXEC SeachEmployee
+    @FSalary = 50000, 
+    @LSalary = 80000;
+
+EXEC SeachEmployee 
+    @FSalary = 50000, 
+    @LSalary = 80000, 
+    @Name = 'Jane Smith';
+
+--Create a Stored Procedure to Update Employee Salary Based on Age
+
+ALTER PROCEDURE UpdateSalary 
+(
+	@Age INT
+)
+AS
+BEGIN
+		IF @Age > 25 
+		BEGIN
+			UPDATE Employee 
+			SET Salary = (Salary*(1+10/100))
+			WHERE Age = @Age;
+		END
+
+		IF @Age > 30
+		BEGIN
+			UPDATE Employee 
+			SET Salary = (Salary*(1+15/100))
+			WHERE Age = @Age;
+		END
+END;
+
+UpdateSalary 28;
+
+
+select * from Employee
