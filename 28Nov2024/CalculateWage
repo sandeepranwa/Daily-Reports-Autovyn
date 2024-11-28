@@ -1,0 +1,62 @@
+
+using System;
+
+namespace EmployeeWageCalculator
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int totalWage = 0;
+            int totalWorkingHours = 0;
+
+            Console.WriteLine("Employee Wage Calculation for the Month");
+
+            Random random = new Random();
+
+            for (int day = 1; day <= 20; day++)
+            {
+                Console.WriteLine($"\nDay {day} :");
+
+                int attendanceType = random.Next(0, 3);
+                int dailyWage = 0; 
+                int dailyHours = 0; 
+
+                switch (attendanceType)
+                {
+                    case 0:
+                        Console.WriteLine("Attendance: Absent");
+                        dailyHours = 0; 
+                        break;
+                    case 1:
+                        Console.WriteLine("Attendance: Present & Part-Time");
+                        dailyHours = 4; 
+                        break;
+                    case 2:
+                        Console.WriteLine("Attendance: Present & Full-Time");
+                        dailyHours = 8;
+                        break;
+                }
+
+                dailyWage = dailyHours * 20;
+
+                totalWorkingHours += dailyHours;
+                totalWage += dailyWage;
+
+                Console.WriteLine($"Daily Wage: {dailyWage}");
+
+                if (totalWorkingHours >= 100)
+                {
+                    Console.WriteLine("Maximum working hours reached!");
+                    break;
+                }
+            }
+
+            Console.WriteLine("\n=== Final Calculation ===");
+            Console.WriteLine($"Total Working Hours: {totalWorkingHours}");
+            Console.WriteLine($"Total Wage for the Month: {totalWage}");
+        }
+    }
+}
+
